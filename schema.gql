@@ -32,20 +32,35 @@ input CreateCategoryDto {
   name: String!
 }
 
+input CreateUserDto {
+  confirm_password: String!
+  full_name: String!
+  lang: String
+  password: String!
+  phone: String!
+  region: String
+  role: String
+}
+
 type Mutation {
   createAdmin(createAdmin: CreateAdminDto!): Admin!
   createCategory(createCategory: CreateCategoryDto!): Category!
+  createUser(createUser: CreateUserDto!): User!
   removeAdmin(id: ID!): Float!
   removeCategory(id: ID!): Float!
+  removeUser(id: ID!): Float!
   updateAdmin(id: ID!, updateAdmin: UpdateAdminDto!): Admin!
   updateCategory(id: ID!, updateCategory: UpdateCategoryDto!): Category!
+  updateUser(id: ID!, updateUser: UpdateUserDto!): User!
 }
 
 type Query {
   findAllAdmins: [Admin!]!
   findAllCategories: [Category!]!
+  findAllUsers: [User!]!
   findOneAdmin(id: ID!): Admin!
   findOneCategory(id: ID!): Category!
+  findOneUser(id: ID!): User!
 }
 
 input UpdateAdminDto {
@@ -62,4 +77,27 @@ input UpdateAdminDto {
 input UpdateCategoryDto {
   id: ID!
   name: String
+}
+
+input UpdateUserDto {
+  confirm_password: String
+  full_name: String
+  id: ID!
+  lang: String
+  password: String
+  phone: String
+  region: String
+  role: String
+}
+
+type User {
+  full_name: String!
+  hashed_password: String!
+  hashed_refresh_token: String
+  id: ID!
+  is_verified: Float!
+  lang: String
+  phone: String!
+  region: String
+  role: String!
 }
