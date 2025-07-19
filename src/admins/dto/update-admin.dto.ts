@@ -1,4 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateAdminDto } from './create-admin.dto';
+import { InputType, Field, PartialType, ID } from "@nestjs/graphql";
+import { CreateAdminDto } from "./create-admin.dto";
 
-export class UpdateAdminDto extends PartialType(CreateAdminDto) {}
+@InputType()
+export class UpdateAdminDto extends PartialType(CreateAdminDto) {
+  @Field(() => ID)
+  id: number;
+}

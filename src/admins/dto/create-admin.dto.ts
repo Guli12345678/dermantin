@@ -1,10 +1,19 @@
+import { InputType, Field } from "@nestjs/graphql";
+
+@InputType()
 export class CreateAdminDto {
+  @Field()
   full_name: string;
+  @Field()
   email: string;
+  @Field()
   phone: string;
+  @Field()
   password: string;
+  @Field()
   confirm_password: string;
-  
-  is_active: boolean;
-  is_creator: boolean;
+  @Field({ nullable: true })
+  is_active?: boolean;
+  @Field({ nullable: true })
+  is_creator?: boolean;
 }

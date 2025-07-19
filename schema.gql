@@ -1,0 +1,65 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Admin {
+  email: String!
+  full_name: String!
+  hashed_password: String!
+  hashed_refresh_token: String
+  id: ID!
+  is_active: Boolean!
+  is_creator: Boolean!
+  phone: String!
+}
+
+type Category {
+  id: ID!
+  name: String!
+}
+
+input CreateAdminDto {
+  confirm_password: String!
+  email: String!
+  full_name: String!
+  is_active: Boolean
+  is_creator: Boolean
+  password: String!
+  phone: String!
+}
+
+input CreateCategoryDto {
+  name: String!
+}
+
+type Mutation {
+  createAdmin(createAdmin: CreateAdminDto!): Admin!
+  createCategory(createCategory: CreateCategoryDto!): Category!
+  removeAdmin(id: ID!): Float!
+  removeCategory(id: ID!): Float!
+  updateAdmin(id: ID!, updateAdmin: UpdateAdminDto!): Admin!
+  updateCategory(id: ID!, updateCategory: UpdateCategoryDto!): Category!
+}
+
+type Query {
+  findAllAdmins: [Admin!]!
+  findAllCategories: [Category!]!
+  findOneAdmin(id: ID!): Admin!
+  findOneCategory(id: ID!): Category!
+}
+
+input UpdateAdminDto {
+  confirm_password: String
+  email: String
+  full_name: String
+  id: ID!
+  is_active: Boolean
+  is_creator: Boolean
+  password: String
+  phone: String
+}
+
+input UpdateCategoryDto {
+  id: ID!
+  name: String
+}
