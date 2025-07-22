@@ -14,7 +14,7 @@ export class CategoryResolver {
   }
 
   @Query(() => Category)
-  findOneCategory(@Args("id", { type: () => ID }) id: string) {
+  findOneCategory(@Args("id", { type: () => ID }) id: number) {
     return this.categoryService.findOne(+id);
   }
 

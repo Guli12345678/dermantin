@@ -13,7 +13,18 @@ type Admin {
   phone: String!
 }
 
+type Advertisement {
+  dermantin: Dermantin!
+  discount_percent: Float!
+  end_date: DateTime!
+  id: ID!
+  start_date: DateTime!
+  status: String!
+  type: String!
+}
+
 type Category {
+  dermantin: [Dermantin!]!
   id: ID!
   name: String!
 }
@@ -28,8 +39,27 @@ input CreateAdminDto {
   phone: String!
 }
 
+input CreateAdvertisementDto {
+  discount_percent: Int!
+  end_date: DateTime!
+  start_date: DateTime!
+  status: String!
+  type: String!
+}
+
 input CreateCategoryDto {
   name: String!
+}
+
+input CreateDermantinDto {
+  class: String!
+  price: String!
+  rating: String!
+}
+
+input CreateDermantinImageDto {
+  image_url: String!
+  is_main: String!
 }
 
 input CreateUserDto {
@@ -42,24 +72,62 @@ input CreateUserDto {
   role: String
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Dermantin {
+  ads: [Advertisement!]!
+  category: Category!
+  class: String!
+  id: ID!
+  images: [DermantinImage!]!
+  name: String!
+  price: String!
+  rating: String!
+}
+
+type DermantinImage {
+  dermantin: Dermantin!
+  id: ID!
+  image_url: String!
+  is_main: String!
+}
+
 type Mutation {
   createAdmin(createAdmin: CreateAdminDto!): Admin!
+  createAdvertisement(createAdvertisement: CreateAdvertisementDto!, dermantinId: ID!): Advertisement!
   createCategory(createCategory: CreateCategoryDto!): Category!
+  createDermantin(categoryId: ID!, createDermantin: CreateDermantinDto!): Dermantin!
+  createDermantinImage(createDermantinImage: CreateDermantinImageDto!, dermantinId: ID!): DermantinImage!
   createUser(createUser: CreateUserDto!): User!
   removeAdmin(id: ID!): Float!
+  removeAdvertisement(id: ID!): Float!
   removeCategory(id: ID!): Float!
+  removeDermantin(id: ID!): Float!
+  removeDermantinImage(id: ID!): Float!
   removeUser(id: ID!): Float!
   updateAdmin(id: ID!, updateAdmin: UpdateAdminDto!): Admin!
+  updateAdvertisement(id: ID!, updateAdvertisement: UpdateAdvertisementDto!): Advertisement!
   updateCategory(id: ID!, updateCategory: UpdateCategoryDto!): Category!
+  updateDermantin(id: ID!, updateDermantin: UpdateDermantinDto!): Dermantin!
+  updateDermantinImage(id: ID!, updateDermantinImage: UpdateDermantinImageDto!): DermantinImage!
   updateUser(id: ID!, updateUser: UpdateUserDto!): User!
 }
 
 type Query {
   findAllAdmins: [Admin!]!
+  findAllAdvertisements: [Advertisement!]!
   findAllCategories: [Category!]!
+  findAllDermantin: [Dermantin!]!
+  findAllDermantinImage: [DermantinImage!]!
   findAllUsers: [User!]!
   findOneAdmin(id: ID!): Admin!
+  findOneAdvertisement(id: ID!): Advertisement!
   findOneCategory(id: ID!): Category!
+  findOneDermantin(id: ID!): Dermantin!
+  findOneDermantinImage(id: ID!): DermantinImage!
   findOneUser(id: ID!): User!
 }
 
@@ -74,9 +142,28 @@ input UpdateAdminDto {
   phone: String
 }
 
+input UpdateAdvertisementDto {
+  discount_percent: Float
+  end_date: DateTime
+  start_date: DateTime
+  status: String
+  type: String
+}
+
 input UpdateCategoryDto {
   id: ID!
   name: String
+}
+
+input UpdateDermantinDto {
+  class: String
+  price: String
+  rating: String
+}
+
+input UpdateDermantinImageDto {
+  image_url: String
+  is_main: String
 }
 
 input UpdateUserDto {

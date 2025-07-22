@@ -7,6 +7,9 @@ import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import { DermantinModule } from './dermantin/dermantin.module';
+import { DermantinImagesModule } from './dermantin_images/dermantin_images.module';
+import { AdvertisementsModule } from './advertisements/advertisements.module';
 
 @Module({
   imports: [
@@ -40,6 +43,9 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
       sortSchema: true,
       playground: true,
     }),
+    DermantinModule,
+    DermantinImagesModule,
+    AdvertisementsModule,
   ],
   controllers: [],
   providers: [],
