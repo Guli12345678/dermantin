@@ -29,6 +29,13 @@ type Category {
   name: String!
 }
 
+type Chat {
+  id: ID!
+  messages: [Message!]!
+  store: Store!
+  user: User!
+}
+
 input CreateAdminDto {
   confirm_password: String!
   email: String!
@@ -51,8 +58,14 @@ input CreateCategoryDto {
   name: String!
 }
 
+input CreateChatDto {
+  store: storeinput!
+  user: UserInput!
+}
+
 input CreateDermantinDto {
   class: String!
+  name: String!
   price: String!
   rating: String!
 }
@@ -60,6 +73,36 @@ input CreateDermantinDto {
 input CreateDermantinImageDto {
   image_url: String!
   is_main: String!
+}
+
+input CreateHistoryDto {
+  dermantin: dermantininput!
+  user: UserInput!
+}
+
+input CreateMessageDto {
+  chat: chatinput!
+  is_read: Boolean!
+  text: String!
+}
+
+input CreateRequestDto {
+  status: String!
+  text: String!
+}
+
+input CreateReviewDto {
+  ranking: Float!
+}
+
+input CreateStoreDto {
+  description: String!
+  id: Int!
+  logo_url: String!
+  name: String!
+  rating_id: Int!
+  region: String!
+  status: String!
 }
 
 input CreateUserDto {
@@ -81,11 +124,13 @@ type Dermantin {
   ads: [Advertisement!]!
   category: Category!
   class: String!
+  history: [History!]!
   id: ID!
   images: [DermantinImage!]!
   name: String!
   price: String!
   rating: String!
+  reviews: [Review!]!
 }
 
 type DermantinImage {
@@ -95,24 +140,55 @@ type DermantinImage {
   is_main: String!
 }
 
+type History {
+  dermantin: Dermantin!
+  id: ID!
+  user: User!
+}
+
+type Message {
+  chat: Chat!
+  id: ID!
+  is_read: Boolean!
+  text: String!
+}
+
 type Mutation {
   createAdmin(createAdmin: CreateAdminDto!): Admin!
   createAdvertisement(createAdvertisement: CreateAdvertisementDto!, dermantinId: ID!): Advertisement!
   createCategory(createCategory: CreateCategoryDto!): Category!
+  createChat(createChat: CreateChatDto!, storeId: ID!, userId: ID!): Chat!
   createDermantin(categoryId: ID!, createDermantin: CreateDermantinDto!): Dermantin!
   createDermantinImage(createDermantinImage: CreateDermantinImageDto!, dermantinId: ID!): DermantinImage!
+  createHistory(createHistory: CreateHistoryDto!, dermantinId: ID!, userId: ID!): History!
+  createMessage(chatId: ID!, createMessage: CreateMessageDto!): Message!
+  createRequest(createRequest: CreateRequestDto!, userId: ID!): Requests!
+  createReview(createReview: CreateReviewDto!, dermantinId: ID!, userId: ID!): Review!
+  createStore(createStore: CreateStoreDto!, userId: ID!): Store!
   createUser(createUser: CreateUserDto!): User!
   removeAdmin(id: ID!): Float!
   removeAdvertisement(id: ID!): Float!
   removeCategory(id: ID!): Float!
+  removeChat(id: ID!): Float!
   removeDermantin(id: ID!): Float!
   removeDermantinImage(id: ID!): Float!
+  removeHistory(id: ID!): Float!
+  removeMessage(id: ID!): Float!
+  removeRequest(id: ID!): Float!
+  removeReview(id: ID!): Float!
+  removeStore(id: ID!): Float!
   removeUser(id: ID!): Float!
   updateAdmin(id: ID!, updateAdmin: UpdateAdminDto!): Admin!
   updateAdvertisement(id: ID!, updateAdvertisement: UpdateAdvertisementDto!): Advertisement!
   updateCategory(id: ID!, updateCategory: UpdateCategoryDto!): Category!
+  updateChat(id: ID!, updateChat: UpdateChatDto!): Chat!
   updateDermantin(id: ID!, updateDermantin: UpdateDermantinDto!): Dermantin!
   updateDermantinImage(id: ID!, updateDermantinImage: UpdateDermantinImageDto!): DermantinImage!
+  updateHistory(id: ID!, updateHistory: UpdateHistoryDto!): History!
+  updateMessage(id: ID!, updateMessage: UpdateMessageDto!): Message!
+  updateRequest(id: ID!, updateRequest: UpdateRequestDto!): Requests!
+  updateReview(id: ID!, updateReview: UpdateReviewDto!): Review!
+  updateStore(id: ID!, updateStore: UpdateStoreDto!): Store!
   updateUser(id: ID!, updateUser: UpdateUserDto!): User!
 }
 
@@ -120,15 +196,60 @@ type Query {
   findAllAdmins: [Admin!]!
   findAllAdvertisements: [Advertisement!]!
   findAllCategories: [Category!]!
+  findAllChat: [Chat!]!
   findAllDermantin: [Dermantin!]!
   findAllDermantinImage: [DermantinImage!]!
+  findAllHistory: [History!]!
+  findAllMessage: [Message!]!
+  findAllRequest: [Requests!]!
+  findAllReview: [Review!]!
+  findAllStore: [Store!]!
   findAllUsers: [User!]!
   findOneAdmin(id: ID!): Admin!
   findOneAdvertisement(id: ID!): Advertisement!
   findOneCategory(id: ID!): Category!
+  findOneChat(id: ID!): Chat!
   findOneDermantin(id: ID!): Dermantin!
   findOneDermantinImage(id: ID!): DermantinImage!
+  findOneHistory(id: ID!): History!
+  findOneMessage(id: ID!): Message!
+  findOneRequest(id: ID!): Requests!
+  findOneReview(id: ID!): Review!
+  findOneStore(id: ID!): Store!
   findOneUser(id: ID!): User!
+}
+
+type Requests {
+  id: ID!
+  status: String!
+  text: String!
+  user: User!
+}
+
+type Review {
+  dermantin: Dermantin!
+  id: ID!
+  ranking: Float!
+  user: User!
+}
+
+input ReviewInput {
+  dermantin: dermantininput!
+  id: ID!
+  ranking: Float!
+  user: UserInput!
+}
+
+type Store {
+  chats: [Chat!]!
+  description: String!
+  id: ID!
+  logo_url: String!
+  manager: User!
+  name: String!
+  rating_id: Float!
+  region: String!
+  status: String!
 }
 
 input UpdateAdminDto {
@@ -155,6 +276,11 @@ input UpdateCategoryDto {
   name: String
 }
 
+input UpdateChatDto {
+  store: storeinput
+  user: UserInput
+}
+
 input UpdateDermantinDto {
   class: String
   price: String
@@ -164,6 +290,37 @@ input UpdateDermantinDto {
 input UpdateDermantinImageDto {
   image_url: String
   is_main: String
+}
+
+input UpdateHistoryDto {
+  dermantin: dermantininput
+  user: UserInput
+}
+
+input UpdateMessageDto {
+  chat: chatinput
+  is_read: Boolean
+  text: String
+}
+
+input UpdateRequestDto {
+  status: String
+  text: String
+}
+
+input UpdateReviewDto {
+  ranking: Float
+}
+
+input UpdateStoreDto {
+  description: String
+  id: Float
+  logo_url: String
+  manager_id: Float
+  name: String
+  rating_id: Float
+  region: String
+  status: String
 }
 
 input UpdateUserDto {
@@ -178,13 +335,119 @@ input UpdateUserDto {
 }
 
 type User {
+  chats: [Chat!]!
   full_name: String!
   hashed_password: String!
   hashed_refresh_token: String
+  history: [History!]!
   id: ID!
   is_verified: Float!
   lang: String
   phone: String!
   region: String
-  role: String!
+  requests: [Requests!]!
+  reviews: [Review!]!
+  stores: [Store!]!
+}
+
+input UserInput {
+  chats: [chatinput!]!
+  full_name: String!
+  hashed_password: String!
+  hashed_refresh_token: String
+  history: [historyinput!]!
+  id: ID!
+  is_verified: Float!
+  lang: String
+  phone: String!
+  region: String
+  requests: [reuqestImput!]!
+  reviews: [ReviewInput!]!
+  stores: [storeinput!]!
+}
+
+input adinput {
+  dermantin: dermantininput!
+  discount_percent: Float!
+  end_date: DateTime!
+  id: ID!
+  start_date: DateTime!
+  status: String!
+  type: String!
+}
+
+input admininput {
+  email: String!
+  full_name: String!
+  hashed_password: String!
+  hashed_refresh_token: String
+  id: ID!
+  is_active: Boolean!
+  is_creator: Boolean!
+  phone: String!
+}
+
+input catinput {
+  dermantin: [dermantininput!]!
+  id: ID!
+  name: String!
+}
+
+input chatinput {
+  id: ID!
+  messages: [messageinpue!]!
+  store: storeinput!
+  user: UserInput!
+}
+
+input dermantininput {
+  ads: [adinput!]!
+  category: catinput!
+  class: String!
+  history: [historyinput!]!
+  id: ID!
+  images: [imageinput!]!
+  name: String!
+  price: String!
+  rating: String!
+  reviews: [ReviewInput!]!
+}
+
+input historyinput {
+  dermantin: dermantininput!
+  id: ID!
+  user: UserInput!
+}
+
+input imageinput {
+  dermantin: dermantininput!
+  id: ID!
+  image_url: String!
+  is_main: String!
+}
+
+input messageinpue {
+  chat: chatinput!
+  id: ID!
+  is_read: Boolean!
+  text: String!
+}
+
+input reuqestImput {
+  id: ID!
+  status: String!
+  text: String!
+  user: UserInput!
+}
+
+input storeinput {
+  chats: [chatinput!]!
+  description: String!
+  id: ID!
+  logo_url: String!
+  manager: UserInput!
+  name: String!
+  rating_id: Float!
+  region: String!
+  status: String!
 }

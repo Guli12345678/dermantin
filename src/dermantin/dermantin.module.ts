@@ -22,6 +22,6 @@ import { CategoryModule } from "../category/category.module";
   ],
   controllers: [DermantinController],
   providers: [DermantinService, CategoryResolver, DermantinResolver],
-  exports: [DermantinService],
+  exports: [DermantinService, DermantinResolver],
 })
 export class DermantinModule {}

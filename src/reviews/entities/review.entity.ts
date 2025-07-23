@@ -1,36 +1,25 @@
 import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "../../users/entities/user.entity";
 import { Dermantin } from "../../dermantin/entities/dermantin.entity";
 
-@InputType("adinput")
 @ObjectType()
+@InputType("ReviewInput")
 @Entity()
-export class Advertisement {
+export class Review {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
   @Field()
   @Column()
-  discount_percent: number;
-
-  @Field()
-  @Column()
-  type: string;
-
-  @Field()
-  @Column({ enum: ["pending", "completed", "rejected"] })
-  status: string;
-
-  @Field()
-  @Column()
-  start_date: Date;
-
-  @Field()
-  @Column()
-  end_date: Date;
+  ranking: number;
 
   @Field((type) => Dermantin)
-  @ManyToOne((type) => Dermantin, (dermantin) => dermantin.ads)
+  @ManyToOne((type) => Dermantin, (dermantin) => dermantin.reviews)
   dermantin: Dermantin;
+
+  @Field((type) => User)
+  @ManyToOne((type) => User, (user) => user.reviews)
+  user: User;
 }

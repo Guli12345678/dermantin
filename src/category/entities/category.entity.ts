@@ -1,7 +1,8 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Dermantin } from "../../dermantin/entities/dermantin.entity";
 
+@InputType("catinput")
 @ObjectType()
 @Entity()
 export class Category {

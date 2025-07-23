@@ -1,9 +1,14 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Review } from "../../reviews/entities/review.entity";
+import { Requests } from "../../request/entities/request.entity";
+import { Chat } from "../../chat/entities/chat.entity";
+import { History } from "../../history/entities/history.entity";
+import { Store } from "../../stores/entities/store.entity";
 
 export enum UserRole {
   USER = "user",
-  ADMIN = "manager",
+  MANAGER = "manager",
 }
 
 export enum UserRegion {
@@ -18,7 +23,8 @@ export enum UserLang {
 }
 
 @ObjectType()
-@Entity("users")
+@InputType("UserInput")
+@Entity()
 export class User {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
@@ -31,10 +37,6 @@ export class User {
   @Field()
   @Column()
   phone: string;
-
-  @Field()
-  @Column({ type: "enum", enum: UserRole, default: UserRole.USER })
-  role: UserRole;
 
   @Field()
   @Column({ type: "bigint", default: 0 })
@@ -55,4 +57,27 @@ export class User {
   @Field({ nullable: true })
   @Column({ nullable: true, default: null })
   hashed_refresh_token: string;
+
+  @Field((type) => [Review])
+  @OneToMany((type) => Review, (review) => review.user)
+  reviews: Review[];
+
+  @Field((type) => [Requests])
+  @OneToMany((type) => Requests, (req) => req.user)
+  requests: Requests[];
+
+  @Field((type) => [Chat])
+  @OneToMany((type) => Chat, (chat) => chat.user)
+  chats: Chat[];
+
+  @Field((type) => [History])
+  @OneToMany((type) => History, (history) => history.user)
+  history: History[];
+
+  @Field((type) => [Store])
+  @OneToMany((type) => Store, (store) => store.manager)
+  stores: Store[];
+
+  @Column({ type: "enum", enum: UserRole, default: UserRole.USER })
+  role: UserRole;
 }

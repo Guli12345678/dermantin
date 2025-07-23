@@ -1,7 +1,8 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @ObjectType()
+@InputType("admininput")
 @Entity()
 export class Admin {
   @Field(() => ID)

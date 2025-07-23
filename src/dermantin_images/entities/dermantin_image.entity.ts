@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 import {
   Column,
   Entity,
@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Dermantin } from "../../dermantin/entities/dermantin.entity";
 
+@InputType("imageinput")
 @Entity()
 @ObjectType()
 export class DermantinImage {

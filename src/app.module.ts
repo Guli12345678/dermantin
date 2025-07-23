@@ -7,9 +7,15 @@ import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
-import { DermantinModule } from './dermantin/dermantin.module';
-import { DermantinImagesModule } from './dermantin_images/dermantin_images.module';
-import { AdvertisementsModule } from './advertisements/advertisements.module';
+import { DermantinModule } from "./dermantin/dermantin.module";
+import { DermantinImagesModule } from "./dermantin_images/dermantin_images.module";
+import { AdvertisementsModule } from "./advertisements/advertisements.module";
+import { StoresModule } from "./stores/stores.module";
+import { ReviewsModule } from "./reviews/reviews.module";
+import { RequestModule } from "./request/request.module";
+import { ChatModule } from "./chat/chat.module";
+import { HistoryModule } from "./history/history.module";
+import { MessageModule } from "./message/message.module";
 
 @Module({
   imports: [
@@ -46,6 +52,12 @@ import { AdvertisementsModule } from './advertisements/advertisements.module';
     DermantinModule,
     DermantinImagesModule,
     AdvertisementsModule,
+    StoresModule,
+    ReviewsModule,
+    RequestModule,
+    ChatModule,
+    HistoryModule,
+    MessageModule,
   ],
   controllers: [],
   providers: [],
